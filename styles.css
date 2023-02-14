@@ -85,6 +85,11 @@ body {
   align-items: center;
 }
 
+#form-target-score,
+#form-time-limit {
+  max-width: 50px;
+}
+
 .confirm {
   margin-top: 0.5rem;
   outline: none;
