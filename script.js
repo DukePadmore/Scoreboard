@@ -12,9 +12,14 @@ const homeNameDisplay = document.querySelector('.home-name');
 const awayNameDisplay = document.querySelector('.away-name');
 const homeScoreDisplay = document.querySelector('.home');
 const awayScoreDisplay = document.querySelector('.away');
+const gameOverModal = document.querySelector('.game-over');
+const gameOverHeader = document.querySelector('.game-over-header');
+const gameOverMessage = document.querySelector('.game-over-message');
 
 let homeScore = 0;
+let homeTeam;
 let awayScore = 0;
+let awayTeam;
 let targetScore = 0;
 let timeLimit = 0;
 let isGameOver = false;
@@ -39,8 +44,10 @@ form.addEventListener('submit', e => {
     timeLimit = +timeLimitInput.value;
     targetScore = targetScoreInput.value;
     targetScoreDisplay.innerText = targetScore;
-    homeNameDisplay.innerText = homeTeamNameInput.value.toUpperCase();
-    awayNameDisplay.innerText = awayTeamNameInput.value.toUpperCase();
+    homeTeam = homeTeamNameInput.value.toUpperCase();
+    awayTeam = awayTeamNameInput.value.toUpperCase();
+    homeNameDisplay.innerText = homeTeam;
+    awayNameDisplay.innerText = awayTeam;
     homeTeamNameInput.value = '';
     awayTeamNameInput.value = '';
     popup.classList.remove('active');
@@ -58,8 +65,20 @@ document.addEventListener('click', e => {
     awayScore = awayScore + points;
   }
   updateScore();
-  if (homeScore >= targetScore || awayScore >= targetScore) {
+  if (homeScore >= targetScore) {
     isGameOver = true;
+    stopTimer();
+    const winner = homeTeam;
+    const loser = awayTeam;
+    const endScore = `${homeScore} - ${awayScore}`;
+    displayGameOver(winner, loser, endScore);
+  } else if (awayScore >= targetScore) {
+    isGameOver = true;
+    stopTimer();
+    const winner = awayTeam;
+    const loser = homeTeam;
+    const endScore = `${awayScore} - ${homeScore}`;
+    displayGameOver(winner, loser, endScore);
   }
 });
 
@@ -74,6 +93,7 @@ document.addEventListener('click', e => {
 // ---------- CLICK ON NEW GAME BUTTON ---------- //
 document.addEventListener('click', e => {
   if (!e.target.matches('#new-game')) return;
+  resetGame();
   stopTimer();
   popup.classList.add('active');
 });
@@ -95,6 +115,7 @@ function showErrors(errorMessages) {
 }
 
 function resetGame() {
+  gameOverModal.classList.remove('active');
   homeScore = 0;
   awayScore = 0;
   updateScore();
@@ -107,15 +128,15 @@ function updateScore() {
 }
 
 function startTimer() {
-  // let time = timeLimit * 60;
-  // intervalId = setInterval(() => {
-  //   let minutes = parseInt(time / 60);
-  //   let seconds = parseInt(time % 60);
-  //   minutes = minutes < 10 ? '0' + minutes : minutes;
-  //   seconds = seconds < 10 ? '0' + seconds : seconds;
-  //   timeDisplay.innerText = `${minutes}:${seconds}`;
-  //   time = time <= 0 ? 0 : time - 1;
-  // }, 1000);
+  let time = timeLimit * 60;
+  intervalId = setInterval(() => {
+    let minutes = parseInt(time / 60);
+    let seconds = parseInt(time % 60);
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    timeDisplay.innerText = `${minutes}:${seconds}`;
+    time = time <= 0 ? 0 : time - 1;
+  }, 1000);
 }
 
 function stopTimer() {
@@ -124,19 +145,9 @@ function stopTimer() {
   timeDisplay.innerText = '00:00';
 }
 
-// --------------- FONCTIONNALITÉS À AJOUTER --------------- //
-/* 
-   - points d'écart (ex : augmenter le score cible si les deux joueurs sont à 20 partout et que le match se termine à 21)
-   - sauvegarder des scores
-   - entrer le nom des participants (afficher le nom de l'équipe sur le scoreboard et liste des joueurs dans le récap sauvegardé)
-   - sons (à chaque panier, lorsque la limite de score/temps est atteinte)
-   - possibilité de retirer des points en cas d'erreur
-*/
-
-// --------------- FONCTIONNALITÉS DONE --------------- //
-/* - définir le score cible
-   - handle click sur new game
-   - terminer la partie lorsque le score cible est atteint
-   - limite de temps
-   - chrono à ajouter
- */
+function displayGameOver(winner, loser, score) {
+  console.log(winner + 'wins');
+  gameOverHeader.innerText = `${winner} WINS !`;
+  gameOverMessage.innerText = `${winner} ${score} ${loser}`;
+  gameOverModal.classList.add('active');
+}

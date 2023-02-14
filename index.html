@@ -52,33 +52,44 @@
     </section>
   </div>
 
+  <div class="game-over">
+    <h2 class="game-over-header"></h2>
+    <p class="game-over-message"></p>
+  </div>
+
   <div class="popup active">
     <div class="overlay" id="overlay"></div>
+
+
+
     <div class="modal" id="modal">
+      <h2>My Scoreboard 🏀</h2>
+      <h3>Start a new game</h3>
+      <div class="errors">
+        <ul class="errors-list">
+        </ul>
+      </div>
       <form id="new-game-form">
-        <h3>Start a new game</h3>
-        <div class="errors">
-          <h3 class="error-title">Error</h3>
-          <ul class="errors-list">
-          </ul>
+        <div class="form-number-inputs">
+          <div class="form-group">
+            <label for="form-target-score">Target score</label>
+            <input type="number" id="form-target-score" name="form-target-score " value="21" min="10" max="100">
+          </div>
+          <div class="form-group">
+            <label for="form-time-limit">Time limit (in min.)</label>
+            <input type="number" id="form-time-limit" name="form-time-limit " value="10" min="1" max="60">
+          </div>
         </div>
-        <div>
-          <label for="form-target-score">What is the score target ?</label>
-          <input type="number" id="form-target-score" name="form-target-score " value="21" min="10" max="100">
-        </div>
-        <div>
-          <label for="form-time-limit">What's the time limit (min.)</label>
-          <input type="number" id="form-time-limit" name="form-time-limit " value="10" min="1" max="60">
-        </div>
-        <div>
+
+        <div class="form-group">
           <label for="form-home-team-name">Home team name</label>
           <input type="text" name="form-home-team-name" id="form-home-team-name">
         </div>
-        <div>
+        <div class="form-group">
           <label for="form-away-team-name">Away team name</label>
           <input type="text" name="form-away-team-name" id="form-away-team-name">
         </div>
-        <button id="form-confirm">Let's go</button>
+        <button class="confirm" id="form-confirm">Let's go!</button>
       </form>
     </div>
   </div>
