@@ -1,12 +1,12 @@
+@font-face {
+  font-family: 'Digital 7';
+  src: url('./assets/digital-7.ttf');
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-@font-face {
-  font-family: 'Digital 7';
-  src: url('./assets/digital-7.ttf');
 }
 
 body {
@@ -303,6 +303,7 @@ section {
   .score {
     width: 45px;
     font-size: 1.8rem;
+    padding: 0 0.1em;
   }
 
   .middle-part {
